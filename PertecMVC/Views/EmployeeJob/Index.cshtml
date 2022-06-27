@@ -1,0 +1,67 @@
+﻿@model PertecMVC.Models.Custom.CustomJobHistory
+@{
+    ViewData["Title"] = "Empleos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Barra de navegacion -->
+<div class="col-12 d-flex justify-content-between mb-4">
+    <div class="row col-2">
+        <!-- Boton retroceder -->
+        <a class="btn btn-dark" href="@Url.Action("Index", "Employee")">
+            <i class="fas fa-arrow-left"> Atrás </i>
+        </a>
+    </div>
+</div>
+<!-- Fin de la barra de navegacion -->
+
+<!-- Tarjeta de contenido -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h5 class="card-title"> Listado de historial laboral </h5>
+    </div>
+    <div class="card-body">
+        <!-- Tabla de historial laboral -->
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered" id="dataTable" width="100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Puesto</th>
+                        <th>Fecha inicio</th>
+                        <th>Fecha fin</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Puesto</th>
+                        <th>Fecha inicio</th>
+                        <th>Fecha fin</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model.JobList)
+                    {
+                        <tr>
+                            <th>@item.IdNumber</th>
+                            <th>@item.FirstName @item.MiddleName</th>
+                            <th>@item.LastName</th>
+                            <th>@item.JobDescription</th>
+                            <th>@item.StartDate</th>
+                            <th>@item.EndDate</th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- Fin Tabla de historial laboral -->
+    </div>
+</div>
+<!-- Fin Tarjeta de contenido -->
+

@@ -1,0 +1,89 @@
+﻿@model PertecMVC.Models.Custom.CustomJob
+@{
+    ViewData["Title"] = "Trabajos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Barra de navegacion -->
+<div class="col-12 d-flex justify-content-between mb-4">
+    <div class="row col-2">
+        <!-- Boton retroceder -->
+        <a class="btn btn-dark" href="@Url.Action("Index", "Employee")">
+            <i class="fas fa-arrow-left"> Atrás </i>
+        </a>
+    </div>
+
+</div>
+
+<!-- Formulario -->
+<div class="row d-flex justify-content-center">
+    <div class="card o-hidden col-10">
+        <div class="card-body">
+            @using (Html.BeginForm("Add", "Job"))
+            {
+                <div class="row">
+                    <div class="col-md-10 form-group">
+                        @Html.TextBoxFor(m => m.Description, new { placeholder = "Descripción del empleo", required = "true", @class = "form-control" })
+                    </div>
+
+                    <div class="col-md-2 form-group d-flex justify-content-end">
+                        <button type="submit" class="btn btn-secondary">
+                            <i class="far fa-save"> Agregar</i>
+                        </button>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- Fin Formulario -->
+<br />
+<!-- Tarjeta de contenido -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h5 class="card-title"> Listado de puestos </h5>
+    </div>
+    <div class="card-body">
+        <!-- Tabla de trabajos -->
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered" id="dataTable" width="100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Descripción</th>
+                        <th style="width:100px;">Eliminar</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Id</th>
+                        <th>Descripción</th>
+                        <th style="width:100px;">Eliminar</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model.JobList!)
+                    {
+                        <tr>
+                            <th>@item.Id</th>
+                            <th>@item.Description</th>
+                            <th>
+                                @using (Html.BeginForm("Delete", "Job", new {id = item.Id}))
+                                {
+                                    <button type="submit" class="btn btn-outline-secondary m-2">
+                                        <i class="fas fa-trash" style="font-size:15px;"> Eliminar </i>
+                                    </button>
+
+                                }
+
+                            </th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- Fin Tabla de trabajos -->
+    </div>
+</div>
+<!-- Fin Tarjeta de contenido -->

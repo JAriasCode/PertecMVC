@@ -1,0 +1,91 @@
+﻿@model PertecMVC.Models.Custom.CustomEmployee
+@{
+    ViewData["Title"] = "Empleados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Barra de navegacion -->
+<div class="col-12 d-flex justify-content-between mb-4">
+    <div class="row col-2">
+        <!-- Boton retroceder -->
+        <a class="btn btn-dark" href="@Url.Action("Index", "Home")">
+            <i class="fas fa-arrow-left"> Atrás </i>
+        </a>
+    </div>
+    <div class="row justify-content-end">
+
+        <a class="btn btn-dark mr-2" href="@Url.Action("Add", "Employee")">
+            <i class="fas fa-user-friends"> Agregar empleados </i>
+        </a>
+
+    </div>
+</div>
+<!-- Fin de la barra de navegacion -->
+<!-- Tarjeta de contenido -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h5 class="card-title"> Listado de empleados </h5>
+    </div>
+    <div class="card-body">
+        <!-- Tabla de empleados -->
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered" id="dataTable" width="100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Celular</th>
+                        <th>Email</th>
+                        <th>Direccion</th>
+                        <th>Puesto Actual</th>
+                        <th style="width:100px">Estado</th>
+                        <th style="width:100px;">Ver detalles</th>
+                        <th style="width:100px;">Ver empleos</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Celular</th>
+                        <th>Email</th>
+                        <th>Direccion</th>
+                        <th>Puesto Actual</th>
+                        <th style="width:100px">Estado</th>
+                        <th style="width:100px;">Ver detalles</th>
+                        <th style="width:100px;">Ver empleos</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model.EmployeeList!)
+                    {
+                        <tr>
+                            <th>@item.IdNumber</th>
+                            <th>@item.FirstName @item.MiddleName</th>
+                            <th>@item.LastName</th>
+                            <th>@item.PhoneNumber</th>
+                            <th>@item.Email</th>
+                            <th>@item.Address</th>
+                            <th>@item.CurrentJob</th>
+                            <th>@item.CurrentStatus</th>
+                            <th>
+                                <a class="btn btn-outline-secondary m-2" href="@Url.Action("Edit", "Employee", new {idNumber = item.IdNumber})">
+                                    <i class="fas fa-edit" style="font-size:15px;"> Editar </i>
+                                </a>
+                            </th>
+                            <th>
+                                <a class="btn btn-outline-secondary m-2" href="@Url.Action("Index", "EmployeeJob", new {employeeIdNumber = item.IdNumber})">
+                                    <i class="fas fa-eye" style="font-size:15px;"> Ver empleos </i>
+                                </a>
+                            </th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- Fin Tabla de empleados -->
+    </div>
+</div>
+<!-- Fin Tarjeta de contenido -->
