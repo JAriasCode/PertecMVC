@@ -1,6 +1,8 @@
 # PertecMVC
 MVC test project for Pertec Global Services
 
+Video tutorial: https://youtu.be/kn0AiA1mpFs
+
 Instrucciones:
 Para funcionar el proyecto requiere una base de datos SQL Server (adjunta), realizada de forma database first.
 

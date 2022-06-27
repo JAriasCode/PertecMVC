@@ -104,10 +104,15 @@ namespace PertecMVC.Controllers
         {
             try
             {
+                bool isChangingJob = false;
+
                 //Get the last job possition assigned to the employee
                 int oldJob = _context.JobHistories.Where(x => x.EmployeeIdNumber.Equals(customEmployee.IdNumber)).OrderByDescending(x => x.Id).FirstOrDefault()!.JobId;
                 //Gets the new possition to be assigned
                 int newJob = customEmployee.CurrentJob;
+
+                if (oldJob != newJob)
+                    isChangingJob = true;
 
                 _context.Employees.Update(customEmployee.GetEmployee());
 
@@ -122,13 +127,14 @@ namespace PertecMVC.Controllers
                 //Creates an employee in when the status requires it
                 else if (ValidateIn(customEmployee))
                 {
-                    await _context.JobHistories.AddAsync(customEmployee.GetJobHistory());
+                    if (!isChangingJob)
+                        await _context.JobHistories.AddAsync(customEmployee.GetJobHistory());
 
                     await _context.EmployeeInOuts.AddAsync(customEmployee.GetEmployeeIn());
                 }
 
                 //Create a new registry on the Job History when a new job possition is assigned
-                if (oldJob != newJob)
+                if (isChangingJob)
                 {
                     SetJobEndDate(customEmployee, oldJob);
 
@@ -141,7 +147,7 @@ namespace PertecMVC.Controllers
                 {
                     _notyf.Success("Empleado actualizado con éxito");
                     return RedirectToAction("Index");
-                }             
+                }
 
             }
             catch (Exception ex)
@@ -149,7 +155,7 @@ namespace PertecMVC.Controllers
                 _notyf.Error(ex.Message);
             }
 
-            return RedirectToAction("Edit", new { customEmployee.IdNumber } );
+            return RedirectToAction("Edit", new { customEmployee.IdNumber });
 
         }
 
@@ -208,7 +214,7 @@ namespace PertecMVC.Controllers
                 jobHistory.EndDate = DateTime.Now;
                 _context.JobHistories.Update(jobHistory);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }
